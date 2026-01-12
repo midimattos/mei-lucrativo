@@ -19,7 +19,7 @@
                 <p class="text-sm font-medium text-slate-700">Copie a chave PIX abaixo e faça o pagamento de <strong>R$ 14,00</strong>.</p>
             </div>
 
-            <div class="relative bg-slate-50 p-4 rounded-2xl border-2 border-dashed border-slate-200 group">
+            <div class="relative bg-slate-50 p-4 rounded-2xl border-2 border-dashed border-slate-200">
                 <p id="pix-key" class="text-[11px] font-mono break-all text-slate-600 pr-10 leading-relaxed">169b39ab-6785-4d61-b22c-12cda5296b82</p>
                 <button onclick="copyKey()" class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-600 hover:scale-110 transition-transform">
                     <i data-lucide="copy" class="w-5 h-5"></i>
@@ -31,7 +31,9 @@
                 <p class="text-sm font-medium text-slate-700">Clique no botão abaixo para enviar o comprovante. Liberamos seu acesso na hora!</p>
             </div>
 
-            <a id="whatsapp-link" href="#" target="_blank" class="flex items-center justify-center gap-3 w-full bg-[#25D366] text-white py-5 rounded-2xl font-black uppercase text-sm shadow-lg shadow-green-100 active:scale-95 transition-all">
+            <a href="https://wa.me/5551993268858?text=Olá!%20Acabei%20de%20fazer%20o%20PIX%20de%20R$%2014,00%20para%20o%20Kit%20MEI%20Lucrativo.%20Segue%20o%20comprovante%20para%20liberação%20dos%20apps!" 
+               target="_blank" 
+               class="flex items-center justify-center gap-3 w-full bg-[#25D366] text-white py-5 rounded-2xl font-black uppercase text-sm shadow-lg shadow-green-100 active:scale-95 transition-all">
                 <i data-lucide="send"></i> Enviar Comprovante
             </a>
         </div>
@@ -45,18 +47,29 @@
         // Inicializa os ícones
         lucide.createIcons();
 
-        // Função de copiar chave PIX
+        // Função de copiar chave PIX (Melhorada para Mobile)
         function copyKey() {
             const key = document.getElementById('pix-key').innerText;
-            navigator.clipboard.writeText(key).then(() => {
-                alert("Chave PIX copiada com sucesso!");
-            });
+            
+            // Tenta usar a API moderna, se falhar usa o método antigo (mais compatível)
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(key).then(() => {
+                    alert("Chave PIX copiada!");
+                });
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = key;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    alert("Chave PIX copiada!");
+                } catch (err) {
+                    console.error('Erro ao copiar', err);
+                }
+                document.body.removeChild(textArea);
+            }
         }
-
-        // Configuração do WhatsApp
-        const phone = "5551993268858"; 
-        const message = "Olá! Acabei de fazer o PIX de R$ 14,00 para o Kit MEI Lucrativo. Segue o comprovante para liberação dos apps!";
-        document.getElementById('whatsapp-link').href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     </script>
 </body>
 </html>
