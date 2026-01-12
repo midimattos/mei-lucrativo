@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento via PIX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 font-sans p-6">
+
+    <main class="max-w-md mx-auto bg-white rounded-[2.5rem] shadow-xl p-8 text-center border">
+        <h2 class="text-2xl font-black">Finalize seu Pedido</h2>
+        <p class="text-slate-500 text-sm mt-2">Siga os passos abaixo para liberar seus apps:</p>
+
+        <div class="mt-8 text-left space-y-4">
+            <div class="flex gap-4">
+                <div class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold shrink-0">1</div>
+                <p class="text-sm font-medium">Copie a chave PIX abaixo e faça o pagamento de <strong>R$ 14,00</strong>.</p>
+            </div>
+
+            <div class="relative bg-slate-50 p-4 rounded-2xl border-2 border-dashed border-slate-200">
+                <p id="pix-key" class="text-[10px] font-mono break-all text-slate-600 pr-10">SUA-CHAVE-ALEATORIA-AQUI-X-X-X-X-X</p>
+                <button onclick="copyKey()" class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-600">
+                    <i data-lucide="copy" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="flex gap-4 pt-4">
+                <div class="w-8 h-8 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center font-bold shrink-0">2</div>
+                <p class="text-sm font-medium">Clique no botão abaixo para enviar o comprovante. Liberamos seu acesso na hora!</p>
+            </div>
+
+            <a id="whatsapp-link" href="#" target="_blank" class="flex items-center justify-center gap-3 w-full bg-[#25D366] text-white py-5 rounded-2xl font-black uppercase text-sm shadow-lg shadow-green-100">
+                <i data-lucide="send"></i> Enviar Comprovante
+            </a>
+        </div>
+
+        <p class="mt-8 text-[9px] text-slate-400 uppercase font-bold">Aguardamos seu envio para liberar os links</p>
+    </main>
+
+    <script>
+        lucide.createIcons();
+
+        function copyKey() {
+            const key = document.getElementById('pix-key').innerText;
+            navigator.clipboard.writeText(key);
+            alert("Chave PIX copiada!");
+        }
+
+        // Configurar o Link do WhatsApp com mensagem pronta
+        const phone = "5551993268858"; // COLOQUE SEU NUMERO AQUI
+        const message = "Olá! Acabei de fazer o PIX de R$ 14,00 para o Kit MEI Lucrativo. Segue o comprovante para liberação dos apps!";
+        document.getElementById('whatsapp-link').href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    </script>
+</body>
+</html>
